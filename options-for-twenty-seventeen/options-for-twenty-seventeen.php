@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Options for Twenty Seventeen
- * Version: 2.5.3
+ * Version: 2.5.4
  * Plugin URI: https://webd.uk/product/options-for-twenty-seventeen-upgrade/
  * Description: Adds powerful customizer options to modify all aspects of the default WordPress theme Twenty Seventeen
  * Author: Webd Ltd
@@ -21,7 +21,7 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
 
 	class options_for_twenty_seventeen_class {
 
-        public static $version = '2.5.3';
+        public static $version = '2.5.4';
 
 		function __construct() {
 
@@ -3002,8 +3002,6 @@ if (isset($post->ID) && !get_post_meta($post->ID, 'ofts_hide_page_sidebar', true
         }
 
         function ofts_enqueue_customizer_css() {
-
-            wp_enqueue_style('ofts-customizer-css', plugin_dir_url(__FILE__) . 'css/theme-customizer.css', oftsCommon::plugin_version());
 
             if (class_exists('AdvancedTwentySeventeen') && !get_theme_mod('allow_ats_js')) {
 
