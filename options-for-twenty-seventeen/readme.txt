@@ -3,9 +3,9 @@ Contributors: domainsupport
 Donate link: https://webd.uk/product/options-for-twenty-seventeen-upgrade/
 Tags: twenty-seventeen, twentyseventeen, change, customize, modify
 Requires at least: 4.6
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 2.5.4
+Stable tag: 2.5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -179,6 +179,12 @@ Changing fonts in a WordPress theme is not a customisation that is limited to Tw
 7. Footer Options
 
 == Changelog ==
+
+= 2.5.6 =
+* Fixed a bug with CSS output
+
+= 2.5.5 =
+* General housekeeping preparing for "Plugin Check" code review
 
 = 2.5.4 =
 * Remove Customizer CSS due to incompatible change introduced in WordPress v6.7
@@ -717,5 +723,5 @@ Changing fonts in a WordPress theme is not a customisation that is limited to Tw
 
 == Upgrade Notice ==
 
-= 2.5.4 =
-* Remove Customizer CSS due to incompatible change introduced in WordPress v6.7
+= 2.5.6 =
+* Fixed a bug with CSS output

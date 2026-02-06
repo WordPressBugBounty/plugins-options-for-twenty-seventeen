@@ -1,11 +1,13 @@
 <?php
 /*
  * Plugin Name: Options for Twenty Seventeen
- * Version: 2.5.4
+ * Version: 2.5.6
  * Plugin URI: https://webd.uk/product/options-for-twenty-seventeen-upgrade/
  * Description: Adds powerful customizer options to modify all aspects of the default WordPress theme Twenty Seventeen
  * Author: Webd Ltd
  * Author URI: https://webd.uk
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain: options-for-twenty-seventeen
  */
 
@@ -21,7 +23,7 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
 
 	class options_for_twenty_seventeen_class {
 
-        public static $version = '2.5.4';
+        public static $version = '2.5.6';
 
 		function __construct() {
 
@@ -63,18 +65,18 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
 
 
             $wp_customize->add_section('theme_options', array(
-                'title'     => __('Theme Options', 'twentyseventeen'),
+                'title'     => __('Theme Options', 'options-for-twenty-seventeen'),
                 'description'  => __('Use these options to customise the page layout and static front page sections.', 'options-for-twenty-seventeen') . ' ' . $section_description
             ));
 
             $wp_customize->add_control('page_layout', array(
-               'label'           => __( 'Page Layout', 'twentyseventeen' ),
+               'label'           => __( 'Page Layout', 'options-for-twenty-seventeen' ),
                'section'         => 'theme_options',
                 'type'            => 'radio',
-                'description'     => __( 'When the two-column layout is assigned, the page title is in one column and content is in the other.', 'twentyseventeen' ),
+                'description'     => __( 'When the two-column layout is assigned, the page title is in one column and content is in the other.', 'options-for-twenty-seventeen' ),
                 'choices'         => array(
-                    'one-column' => __( 'One Column', 'twentyseventeen' ),
-                    'two-column' => __( 'Two Column', 'twentyseventeen' ),
+                    'one-column' => __( 'One Column', 'options-for-twenty-seventeen' ),
+                    'two-column' => __( 'Two Column', 'options-for-twenty-seventeen' ),
                 ),
                 'priority'   => 1
             ));
@@ -1621,7 +1623,7 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
             )));
 
             $control_label = __('Search / Archive Page Layout', 'options-for-twenty-seventeen');
-            $control_description = __( 'When the two-column layout is assigned, the page title is in one column and content is in the other.', 'twentyseventeen' );
+            $control_description = __( 'When the two-column layout is assigned, the page title is in one column and content is in the other.', 'options-for-twenty-seventeen' );
             oftsCommon::add_hidden_control($wp_customize, 'search_archive_page_layout', 'theme_options', $control_label, $control_description . ' ' . $upgrade_nag, 5);
 
             $control_label = __('Front Page Sections', 'options-for-twenty-seventeen');
@@ -1721,6 +1723,7 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
             oftsCommon::add_hidden_control($wp_customize, 'true_parallax_speed', 'ofts_header', $control_label, $control_description . ' ' . $upgrade_nag);
 
             $control_label = __('Slider Cover', 'options-for-twenty-seventeen');
+/* translators: link to plugin installer */
             $control_description = sprintf(wp_kses(__('Replaces the cover image with a <a href="%s">Nivo</a>, Sliderspack or MetaSlider Slider. Remember to set "Image Size" to "Twenty-Seventeen-featured-image" in your slider settings for best results.', 'options-for-twenty-seventeen'), array('a' => array('href' => array()))), esc_url(admin_url('plugin-install.php?s=nivo-slider-lite&tab=search&type=term')));
             oftsCommon::add_hidden_control($wp_customize, 'nivo_slider_cover', 'ofts_header', $control_label, $control_description . ' ' . $upgrade_nag);
 
@@ -1793,6 +1796,7 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
             oftsCommon::add_hidden_control($wp_customize, 'swap_content_mobile', 'ofts_content', $control_label, $control_description . ' ' . $upgrade_nag);
 
             $control_label = __('Implement Yoast SEO Breadcrumbs', 'options-for-twenty-seventeen');
+/* translators: link to plugin installer */
             $control_description = sprintf(wp_kses(__('Inject <a href="%s">Yoast SEO</a> breadcrumbs above and / or below single post and page content.', 'options-for-twenty-seventeen'), array('a' => array('href' => array()))), esc_url(admin_url('plugin-install.php?s=wordpress-seo&tab=search&type=term')));
             oftsCommon::add_hidden_control($wp_customize, 'implement_yoast_breadcrumbs', 'ofts_content', $control_label, $control_description . ' ' . $upgrade_nag);
 
@@ -1862,6 +1866,7 @@ if (!class_exists('options_for_twenty_seventeen_class')) {
                     'priority'     => 0
                 ));
 
+/* translators: link to plugin installer */
                 oftsCommon::add_hidden_control($wp_customize, 'install_sidemenu', 'sidemenu', 'Install SideMenu', sprintf(wp_kses(__('Add a slide-in side menu and widget area to the site by <a href="%s">installing SideMenu plugin</a>.', 'options-for-twenty-seventeen'), array('a' => array('href' => array()))), esc_url(add_query_arg(array('s' => 'sidemenu+injects', 'tab' => 'search', 'type' => 'term'), self_admin_url('plugin-install.php')))));
 
             }
@@ -2041,7 +2046,7 @@ background-color: transparent;
                 if ($mod) {
 ?>
 #page {
-    <?php echo $mod; ?>
+    <?php echo wp_kses($mod, 'strip'); ?>
 }
 <?php
                 }
@@ -2280,11 +2285,11 @@ body.has-header-image .site-title, body.has-header-video .site-title, body.has-h
             if ($mod) {
 ?>
 .site-title {
-    font-size: <?php echo $mod / 3000 * 2; ?>rem;
+    font-size: <?php echo wp_kses($mod / 6000, 'strip'); ?>rem;
 }
 @media screen and (min-width: 48em) {
     .site-title {
-        font-size: <?php echo $mod / 1000; ?>rem;
+        font-size: <?php echo wp_kses($mod / 1000, 'strip'); ?>rem;
     }
 }
 <?php
@@ -2301,11 +2306,11 @@ body.has-header-image .site-title, body.has-header-video .site-title, body.has-h
             if ($mod) {
 ?>
 .site-description {
-    font-size: <?php echo $mod * 0.0008125; ?>rem;
+    font-size: <?php echo wp_kses($mod * 0.0008125, 'strip'); ?>rem;
 }
 @media screen and (min-width: 48em) {
     .site-description {
-        font-size: <?php echo $mod / 1000; ?>rem;
+        font-size: <?php echo wp_kses($mod / 1000, 'strip'); ?>rem;
     }
 }
 <?php
@@ -2322,7 +2327,7 @@ body.has-header-image .site-title, body.has-header-video .site-title, body.has-h
 ?>
 @media screen and (min-width: 48em) {
 .twentyseventeen-front-page.has-header-image .custom-header-media:before, .twentyseventeen-front-page.has-header-video .custom-header-media:before, .home.blog.has-header-image .custom-header-media:before, .home.blog.has-header-video .custom-header-media:before {
-height: <?php echo $mod; ?>%;
+height: <?php echo wp_kses($mod, 'strip'); ?>%;
 }
 }
 <?php
@@ -2343,7 +2348,7 @@ height: <?php echo $mod; ?>%;
 
 ?>
 .custom-header-media:before {
-background: linear-gradient(to bottom, rgba(<?php echo $r; ?>, <?php echo $g; ?>, <?php echo $b; ?>, 0) 0%, rgba(<?php echo $r; ?>, <?php echo $g; ?>, <?php echo $b; ?>, <?php echo $gradient_opacity; ?>) 75%, rgba(<?php echo $r; ?>, <?php echo $g; ?>, <?php echo $b; ?>, <?php echo $gradient_opacity; ?>) 100%);
+background: linear-gradient(to bottom, rgba(<?php echo wp_kses($r, 'strip'); ?>, <?php echo wp_kses($g, 'strip'); ?>, <?php echo wp_kses($b, 'strip'); ?>, 0) 0%, rgba(<?php echo wp_kses($r, 'strip'); ?>, <?php echo wp_kses($g, 'strip'); ?>, <?php echo wp_kses($b, 'strip'); ?>, <?php echo wp_kses($gradient_opacity, 'strip'); ?>) 75%, rgba(<?php echo wp_kses($r, 'strip'); ?>, <?php echo wp_kses($g, 'strip'); ?>, <?php echo wp_kses($b, 'strip'); ?>, <?php echo wp_kses($gradient_opacity, 'strip'); ?>) 100%);
 }
 <?php
 
@@ -2381,7 +2386,7 @@ background: linear-gradient(to bottom, rgba(<?php echo $r; ?>, <?php echo $g; ?>
 ?>
 @media screen and (min-width: 48em) {
     .site-navigation-fixed.navigation-top {
-        width: <?php echo get_theme_mod('nav_bar_width'); ?>;
+        width: <?php echo wp_kses(get_theme_mod('nav_bar_width'), 'strip'); ?>;
         left: 50%;
         transform: translate(-50%, 0);
     }
@@ -2405,7 +2410,7 @@ background: linear-gradient(to bottom, rgba(<?php echo $r; ?>, <?php echo $g; ?>
 background-color: transparent;
 }
 .navigation-top, .colors-dark .navigation-top, .colors-custom .navigation-top {
-background-image: url("<?php echo $mod; ?>");
+background-image: url("<?php echo wp_kses($mod, 'strip'); ?>");
 }
 .navigation-top {
     border: none;
@@ -2455,11 +2460,11 @@ background-repeat: no-repeat;
 
 ?>
 .navigation-top {
-    font-size: <?php echo ($mod + 125) / 1000; ?>rem;
+    font-size: <?php echo wp_kses(($mod + 125) / 1000, 'strip'); ?>rem;
 }
 @media screen and (min-width: 48em) {
     .navigation-top {
-        font-size: <?php echo $mod / 1000; ?>rem;
+        font-size: <?php echo wp_kses($mod / 1000, 'strip'); ?>rem;
     }
 }
 <?php
@@ -2475,8 +2480,8 @@ background-repeat: no-repeat;
 ?>
 @media screen and (min-width: 48em) {
 	.main-navigation a {
-		padding-top: <?php echo $mod - 1; ?>px;
-		padding-bottom: <?php echo $mod - 1; ?>px;
+		padding-top: <?php echo wp_kses($mod - 1, 'strip'); ?>px;
+		padding-bottom: <?php echo wp_kses($mod - 1, 'strip'); ?>px;
 	}
 }
 <?php
@@ -2501,7 +2506,7 @@ background-repeat: no-repeat;
     .main-navigation li:hover, .main-navigation li.focus, .main-navigation li li:hover, .main-navigation li li.focus,
     .colors-dark .main-navigation li:hover, .colors-dark .main-navigation li.focus, .colors-dark .main-navigation li li:hover, .colors-dark .main-navigation li li.focus,
     .colors-custom .main-navigation li:hover, .colors-custom .main-navigation li.focus, .colors-custom .main-navigation li li:hover, .colors-custom .main-navigation li li.focus {
-        background-color: <?php echo $mod; ?>;
+        background-color: <?php echo wp_kses($mod, 'strip'); ?>;
     }
 }
 <?php
@@ -2517,7 +2522,7 @@ background-repeat: no-repeat;
 ?>
 @media screen and (min-width: 48em) {
     .main-navigation ul ul, .colors-dark .main-navigation ul ul, .colors-custom .main-navigation ul ul {
-        background-color: <?php echo $background_color; ?>;
+        background-color: <?php echo wp_kses($background_color, 'strip'); ?>;
 		border: none;
     }
 }
@@ -2559,14 +2564,14 @@ background-repeat: no-repeat;
 
 ?>
 .navigation-top {
-	background-color: rgba(255, 255, 255, <?php echo $background_opacity; ?>);
-	border-top-color: rgba(238, 238, 238, <?php echo $background_opacity; ?>);
-	border-bottom-color: rgba(238, 238, 238, <?php echo $background_opacity; ?>);
+	background-color: rgba(255, 255, 255, <?php echo wp_kses($background_opacity, 'strip'); ?>);
+	border-top-color: rgba(238, 238, 238, <?php echo wp_kses($background_opacity, 'strip'); ?>);
+	border-bottom-color: rgba(238, 238, 238, <?php echo wp_kses($background_opacity, 'strip'); ?>);
 }
 .colors-dark .navigation-top, .colors-custom .navigation-top {
-	background-color: rgba(34, 34, 34, <?php echo $background_opacity; ?>);
-	border-top-color: rgba(51, 51, 51, <?php echo $background_opacity; ?>);
-	border-bottom-color: rgba(51, 51, 51, <?php echo $background_opacity; ?>);
+	background-color: rgba(34, 34, 34, <?php echo wp_kses($background_opacity, 'strip'); ?>);
+	border-top-color: rgba(51, 51, 51, <?php echo wp_kses($background_opacity, 'strip'); ?>);
+	border-bottom-color: rgba(51, 51, 51, <?php echo wp_kses($background_opacity, 'strip'); ?>);
 }
 <?php
 
@@ -2579,9 +2584,9 @@ background-repeat: no-repeat;
 
 ?>
 .colors-custom .navigation-top {
-	background-color: background: hsla(' . $hue . ', ' . $saturation . ', 100%, <?php echo $background_opacity; ?>);
-	border-top-color: hsla(' . $hue . ', ' . $saturation . ', 93%, <?php echo $background_opacity; ?>);
-	border-bottom-color: hsla(' . $hue . ', ' . $saturation . ', 93%, <?php echo $background_opacity; ?>);
+	background-color: background: hsla(' . $hue . ', ' . $saturation . ', 100%, <?php echo wp_kses($background_opacity, 'strip'); ?>);
+	border-top-color: hsla(' . $hue . ', ' . $saturation . ', 93%, <?php echo wp_kses($background_opacity, 'strip'); ?>);
+	border-bottom-color: hsla(' . $hue . ', ' . $saturation . ', 93%, <?php echo wp_kses($background_opacity, 'strip'); ?>);
 }
 <?php
 
@@ -2597,7 +2602,7 @@ background-repeat: no-repeat;
 ?>
 @media screen and (min-width: 48em) {
 	.main-navigation ul ul, .colors-dark .main-navigation ul ul, .colors-custom .main-navigation ul ul {
-		background-color: <?php echo $mod; ?>;
+		background-color: <?php echo wp_kses($mod, 'strip'); ?>;
 		border: none;
 	}
 	.main-navigation ul li:hover > ul,
@@ -2657,7 +2662,7 @@ background-repeat: no-repeat;
 ?>
 @media screen and (min-width: 30em) {
     .page-one-column .panel-content .wrap {
-        max-width: <?php echo $mod; ?>;
+        max-width: <?php echo wp_kses($mod, 'strip'); ?>;
     }
 }
 <?php
@@ -2706,7 +2711,7 @@ if (isset($post->ID) && !get_post_meta($post->ID, 'ofts_hide_page_sidebar', true
 }
 @media screen and (min-width: 48em) {
     .site-content, .panel-content .wrap {
-        padding-top: <?php echo (($mod / 2) - 0.5); ?>em;
+        padding-top: <?php echo wp_kses((($mod / 2) - 0.5), 'strip'); ?>em;
     }
 }
 <?php
@@ -2761,7 +2766,7 @@ if (isset($post->ID) && !get_post_meta($post->ID, 'ofts_hide_page_sidebar', true
 ?>
 @media screen and (min-width: 48em) {
     .page.page-one-column .entry-header, .twentyseventeen-front-page.page-one-column .entry-header, .archive.page-one-column:not(.has-sidebar) .page-header {
-        margin-bottom: <?php echo (($mod / 2) - 0.5); ?>em;
+        margin-bottom: <?php echo wp_kses((($mod / 2) - 0.5), 'strip'); ?>em;
     }
 }
 <?php
@@ -3018,7 +3023,7 @@ if (isset($post->ID) && !get_post_meta($post->ID, 'ofts_hide_page_sidebar', true
         			'default-image' => array(
         				'url'           => plugin_dir_url(__FILE__) . 'images/header.jpg',
         				'thumbnail_url' => plugin_dir_url(__FILE__) . 'images/header.jpg',
-        				'description'   => __( 'Default Header Image', 'twentyseventeen' ),
+        				'description'   => __( 'Default Header Image', 'options-for-twenty-seventeen' ),
         			),
         		)
         	);
@@ -3202,15 +3207,17 @@ jQuery(document).ready(function() {
 
     if (oftsCommon::is_theme_being_used('twentyseventeen')) {
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	    $options_for_twenty_seventeen_object = new options_for_twenty_seventeen_class();
 
     } else {
 
         if (is_admin()) {
 
-            $themes = wp_get_themes();
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+            $options_for_twenty_seventeen_themes = wp_get_themes();
 
-            if (!isset($themes['twentyseventeen'])) {
+            if (!isset($options_for_twenty_seventeen_themes['twentyseventeen'])) {
 
                 add_action('admin_notices', 'ofts_wrong_theme_notice');
 
@@ -3220,6 +3227,7 @@ jQuery(document).ready(function() {
 
     }
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
     function ofts_wrong_theme_notice() {
 
 ?>
@@ -3229,12 +3237,13 @@ jQuery(document).ready(function() {
 <p><strong><?php esc_html_e('Options for Twenty Seventeen Plugin Error', 'options-for-twenty-seventeen'); ?></strong><br />
 <?php
         printf(
-            __('This plugin requires the default WordPress theme Twenty Seventeen to be active or live previewed in order to function. Your theme "%s" is not compatible.', 'options-for-twenty-seventeen'),
-            get_template()
+/* translators: theme slug */
+            esc_html(__('This plugin requires the default WordPress theme Twenty Seventeen to be active or live previewed in order to function. Your theme "%s" is not compatible.', 'options-for-twenty-seventeen')),
+            esc_html(get_template())
         );
 ?>
 
-<a href="<?php echo add_query_arg('search', 'twentyseventeen', admin_url('theme-install.php')); ?>" title="<?php esc_attr_e('Twenty Seventeen', 'options-for-twenty-seventeen'); ?>"><?php
+<a href="<?php echo esc_url(add_query_arg('search', 'twentyseventeen', admin_url('theme-install.php'))); ?>" title="<?php esc_attr_e('Twenty Seventeen', 'options-for-twenty-seventeen'); ?>"><?php
         esc_html_e('Please install and activate or live preview the Twenty Seventeen theme (or a child theme thereof)', 'options-for-twenty-seventeen');
 ?></a>.</p>
 
